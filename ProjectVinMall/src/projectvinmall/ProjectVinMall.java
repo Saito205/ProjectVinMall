@@ -292,174 +292,24 @@ public class ProjectVinMall {
             System.out.println(Employee.getInfo());
         });
     }
-    void displayElictronic(){
-    elictronicData.forEach(Elictronic -> {
-        System.out.println(Elictronic.toString());
-    });
-    }
-    void addElictronic(){
-    System.out.println("Please enter ID: ");
-    String EId = getValidString();
-    boolean value = false;
-    for (int index = 0; index < elictronicData.size();index++ ){
-        if (elictronicData.get(index).getId().equalsIgnoreCase(EId)){
-            value = true;
-            System.out.println("ID already exists");
-            System.out.println("Please enter another ID!");
-            return;
-        }      
-        }
-    if (!value){
-    System.out.println("Please enter Name: ");
-            String EName = getValidString();
-            System.out.println("Please enter Price: ");
-            double EPrice = sc.nextDouble();
-            sc.nextLine();
-            System.out.println("Please enter Rating: ");
-            double ERating = sc.nextDouble();
-            sc.nextLine();
-            System.out.println("Please enter Brand: ");
-            String EBrand = getValidString();
-            System.out.println("Please enter Model: ");
-            String EModel = getValidString();
-            System.out.println("Please enter Release Year: ");
-            int EreleaseYear = sc.nextInt();
-            System.out.println("Please enter Battery Capacity: ");
-            int EbatteryCapacity = sc.nextInt();
-            Elictronic newApp = new Elictronic(EId, EName, EPrice, ERating, EBrand, EModel, EreleaseYear,EbatteryCapacity);
-            elictronicData.add(newApp);
-            System.out.println("Elictronic add success. "); 
-            return;
-    }
-    }
-    void deleteElictronic(){
-        System.out.println("Please enter ID: ");
-        String EId = getValidString();
-        for (int index = 0; index < elictronicData.size();index++ ){
-        if (elictronicData.get(index).getId().equalsIgnoreCase(EId)){
-        elictronicData.remove(index);
-        System.out.println("Elictronic delete success.");
-        break;     
-        }
-         else {System.out.println("Elictronic delete unsuccess.");break;}
-        }        
-    }
-    void editElictronic(){
-    System.out.println("Please enter ID: ");
-    String EId = getValidString().trim();
-    boolean value = false;
-    for (int index = 0; index < elictronicData.size();index++ ){
-        if (elictronicData.get(index).getId().equalsIgnoreCase(EId)){
-            value = true;
-        System.out.println("Please enter Name: ");
-        String ENewName = getValidString();
-        System.out.println("Please enter Price: ");
-        double ENewPrice = sc.nextDouble();
-        sc.nextLine();
-        System.out.println("Please enter Rating: ");
-        double ENewRating = sc.nextDouble();
-        sc.nextLine();
-        System.out.println("Please enter Brand: ");
-        String ENewBrand = getValidString();
-        System.out.println("Please enter Model: ");
-        String ENewModel = getValidString();
-        System.out.println("Please enter Release Year: ");
-        int ENewreleaseYear = sc.nextInt();
-        System.out.println("Please enter Battery Capacity: ");
-        int ENewbatteryCapacity = sc.nextInt();
-        Elictronic newApp = new Elictronic(EId, ENewName, ENewPrice, ENewRating, ENewBrand, ENewModel, ENewreleaseYear,ENewbatteryCapacity);
-        elictronicData.set(index, newApp);
-        System.out.println("Elictronic edit success.");  
-        break;
-        }    
-        }
-    if (!value){System.out.println("Elictronic edit unsuccess.");}     
-    }
-    
-    
-    void searchElictronic(){
-    boolean value = true;
-    while(value){
-            System.out.println("Search by: ");
-            System.out.println("1. Id");
-            System.out.println("2. Name");
-            System.out.println("0. Exit");
-            int choose = getValidInput(3);
-            boolean found = false;
-            switch(choose){
-                case 1:
-                    System.out.println("Enter ID: ");
-                    String id = getValidString();
-                    for (int index = 0; index < elictronicData.size();index++ ){
-                     if (elictronicData.get(index).getId().equalsIgnoreCase(id)){
-                     found = true;
-                       System.out.println(elictronicData.get(index).toString());
-                       return;
-        }
-                     
-    }
-                    if (!found){System.out.println("Elictronic id or name not found.");return;}
-                    
-                
-                case 2:
-                    System.out.println("Enter Name: ");
-                    String name = getValidString();
-                    for (int index = 0; index < elictronicData.size();index++ ){
-                     if ( elictronicData.get(index).getName().equalsIgnoreCase(name)){
-                     found = true;
-                      System.out.println(elictronicData.get(index).toString());
-                      break;
-        }                     
-    }
-                    if (!found){System.out.println("Elictronic id or name not found.");return;}
-                    
-                   
-                
-                case 0:
-                    System.out.println("Exit.");
-                    value=false;
-                break;
-                default:
-                    System.out.println("Please choose again!");
-            }
-        }
-    }
-    void sortElictronic(){
-        boolean value = true;
-        List<Appliance> app;
-        while(value){
-            System.out.println("Sort by: ");
-            System.out.println("1. Id");
-            System.out.println("2. Name");
-            System.out.println("0. Exit");
-            int choose = getValidInput(3);
-            switch(choose){
-                case 1:
-                    applianceData.sort(Comparator.comparing(Appliance::getBrand));
-                    System.out.println("Sorted by Price successfully!");
-                    value=false;
-                break;
-                case 2:
-                    applianceData.sort(Comparator.comparing(Appliance::getPrice));
-                    System.out.println("Sorted by Price successfully!");
-                    value=false;
-                break;
-                case 0:
-                    System.out.println("Exit.");
-                    value=false;
-                break;
-                default:
-                    System.out.println("Please choose again!");
-            }
-        }
-    }
-
     void listAppliance(){
         applianceData.forEach(Appliance -> System.out.println(Appliance.toString()));
     }
     void addAppliance(){
         System.out.print("Please enter ID: ");
-        String Aid = getValidString();
+        String Aid;
+        while(true){
+            Aid = getValidString();
+            boolean check = false;
+            for(Appliance a : applianceData){
+                if(a.getId().equalsIgnoreCase(Aid)){
+                    System.out.print("ID already exists! Please enter again: ");
+                    check = true;
+                    break;
+                }
+            }
+            if(!check){break;}
+        }
         System.out.print("Please enter Name: ");
         String Aname= getValidString();
         System.out.print("Please enter Price: ");
@@ -646,16 +496,6 @@ public class ProjectVinMall {
         System.out.println("0. Back To MALL MANAGEMENT");
 
     }
-    public void ElictronicUI(){
-        System.out.println("----ELICTRONIC MANAGEMENT----");
-        System.out.println("1. Display list ");
-        System.out.println("2. Add new device ");
-        System.out.println("3. Edit information ");
-        System.out.println("4. Delete device");
-        System.out.println("5. Sort by (brand or price)");
-        System.out.println("6. Search information by (Id or name)");
-        System.out.println("0. Back To MALL MANAGEMENT");
-    }
 
     public void ApplianceUI() {
         System.out.println("----EMPLOYEE MANAGEMENT----");
@@ -689,7 +529,20 @@ public class ProjectVinMall {
 
         return input;
     }
-    
+    public static String getValidString(){
+        Scanner scanner = new Scanner(System.in);
+        String string=null;
+        
+        while (true){  
+            string = scanner.nextLine().trim();        
+            if (string == null || string.isEmpty()){
+                System.out.println("Try again!");
+            } else {
+                break;
+            }     
+        }       
+        return string;
+    }
     public static void clearScreen() {
         try {
             Thread.sleep(1000);
@@ -771,39 +624,8 @@ public class ProjectVinMall {
 
                     //------------------------------------endDrinks--------------------------------
                     break;
-                case 4:{
-                    boolean stopE = true;
-                while(stopE){
-                 VinMall.ElictronicUI();
-                 int ElictronicSelect = getValidInput(6);
-                 
-                 switch(ElictronicSelect){
-                     case 1:
-                         VinMall.displayElictronic();
-                     break;
-                     case 2:
-                         VinMall.addElictronic();
-                     break;
-                     case 3:
-                         VinMall.editElictronic();
-                     break;
-                     case 4:
-                         VinMall.deleteElictronic();
-                     break;
-                     case 5:
-                         VinMall.sortElictronic();
-                     break;
-                     case 6:
-                         VinMall.searchElictronic();
-                     break;
-                     default:
-                         System.out.println("Data saved.");
-                         System.out.println("Exit.");
-                         stopE = false;
-                     break;
-                 }
-                }    
-                }
+                case 4://Electronic
+
                     //------------------------------------endElectronic--------------------------------
                     break;
                 case 5://Food
